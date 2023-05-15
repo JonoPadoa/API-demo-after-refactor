@@ -1,15 +1,7 @@
-import { describe } from 'node:test'
-
-let tasks = [
-  {
-    id: 1,
-    name: 'Jono Padoa',
-    description: 'Mission 3 Work',
-    isComplete: false,
-  },
-]
+import * as taskService from '../services/taskService.js'
 
 export const getAllTasks = (req, res) => {
+  const tasks = taskService.getAllTasks()
   res.send(tasks)
 }
 
@@ -17,13 +9,7 @@ export const createOneTask = (req, res) => {
   const name = req.body.name
   const description = req.body.description
 
-  const newTask = {
-    id: tasks.length + 1,
-    name,
-    description,
-    isCompleted: false,
-  }
-  tasks.push(newTask)
+  const newTask = taskService.createOneTask(name, description)
 
   res.send(newTask)
 }
@@ -31,21 +17,13 @@ export const createOneTask = (req, res) => {
 export const getOneTask = (req, res) => {
   const taskId = parseInt(req.params.id)
 
-  const matchedTask = tasks.find((t) => t.id === taskId)
-  if (!matchedTask) {
-    res.status(404).send(`Task not found`)
-  }
+  const matchedTask = taskService.getOneTask(taskId)
   res.send(matchedTask)
 }
 
 export const deleteTask = (req, res) => {
   const taskId = parseInt(req.params.id)
-  const matchedTask = tasks.find((t) => t.id === taskId)
-
-  if (!matchedTask) {
-    res.send(404).send('Task is not found old boy')
-  }
-  tasks = tasks.filter((t) => t.id !== taskId)
+  const matchedTask = taskService.deleteTask(taskId)
   res.send(`Task ${taskId} has been deleted sucessfully!`)
 }
 
@@ -57,14 +35,7 @@ export const updateTask =
     const name = req.body.name
     const description = req.body.description
 
-    const matchedTask = tasks.find((t) => t.id === taskId)
-    if (!matchedTask) {
-      res
-        .status(404)
-        .send('This task has unfortanutely not been found.  Try again')
-    }
-    matchedTask.name = name
-    matchedTask.description = description
+    const matchedTask = taskService.updateTask(taskID, name, description)
     res.send(matchedTask)
   })
 
@@ -74,13 +45,6 @@ export const updateTaskPartial = (req, res) => {
   const name = req.body.name
   const description = req.body.description
 
-  const matchedTask = tasks.find((t) => t.id === taskId)
-  if (!matchedTask) {
-    res
-      .status(404)
-      .send('This task has unfortanutely not been found.  Try again')
-  }
-  matchedTask.name = name ?? matchedTask.name
-  matchedTask.description = description ?? matchedTask.description
+  const matchedTask = taskService.updateTaskPartial(taskId, name, description)
   res.send(matchedTask)
 }
