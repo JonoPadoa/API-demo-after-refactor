@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
+import env from "dotenv";
 
 const server = express();
 server.use(express.json());
 
-const env = require("dotenv");
 env.config();
 
 let tasks = [];
