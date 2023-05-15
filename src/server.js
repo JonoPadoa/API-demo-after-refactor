@@ -5,7 +5,7 @@ import taskRoutes from './routes/index.js'
 const server = express()
 server.use(express.json())
 
-server.use('/', taskRoutes)
+server.use('/api/tasks', taskRoutes)
 
 env.config()
 

@@ -10,11 +10,11 @@ let tasks = [
   },
 ]
 
-router.get('/tasks', (req, res) => {
+router.get('/', (req, res) => {
   res.send(tasks)
 })
 
-router.post('/tasks', (req, res) => {
+router.post('/', (req, res) => {
   const name = req.body.name
   const description = req.body.description
 
@@ -29,7 +29,7 @@ router.post('/tasks', (req, res) => {
   res.send(newTask)
 })
 
-router.get(`/tasks/:id`, (req, res) => {
+router.get(`/:id`, (req, res) => {
   const taskId = parseInt(req.params.id)
 
   const matchedTask = tasks.find((t) => t.id === taskId)
@@ -39,7 +39,7 @@ router.get(`/tasks/:id`, (req, res) => {
   res.send(matchedTask)
 })
 
-router.delete('/tasks/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const taskId = parseInt(req.params.id)
   const matchedTask = tasks.find((t) => t.id === taskId)
 
@@ -50,7 +50,7 @@ router.delete('/tasks/:id', (req, res) => {
   res.send(`Task ${taskId} has been deleted sucessfully!`)
 })
 
-router.put('/tasks/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const taskId = parseInt(req.params.id)
 
   const name = req.body.name
@@ -67,7 +67,7 @@ router.put('/tasks/:id', (req, res) => {
   res.send(matchedTask)
 })
 
-router.patch('/tasks/:id', (req, res) => {
+router.patch('/:id', (req, res) => {
   const taskId = parseInt(req.params.id)
 
   const name = req.body.name
